@@ -1,0 +1,29 @@
+services:
+  autonomous-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: autonomous-landing:jazzy
+    container_name: autonomous_landing_dev
+    working_dir: /workspace/autonomous_landing_ws
+    stdin_open: true
+    tty: true
+    environment:
+      ROS_DOMAIN_ID: "83"
+      DISPLAY: "${DISPLAY:-:0}"
+      WAYLAND_DISPLAY: "${WAYLAND_DISPLAY:-wayland-0}"
+      XDG_RUNTIME_DIR: "${XDG_RUNTIME_DIR:-/mnt/wslg/runtime-dir}"
+      QT_QPA_PLATFORM: xcb
+    volumes:
+      - ../:/workspace/autonomous_landing_ws
+      - ${HOME}/drone_ros2/PX4-Autopilot:/PX4-Autopilot
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - /mnt/wslg:/mnt/wslg
+    devices:
+      - /dev/dxg:/dev/dxg
+    gpus: all
+    command: /bin/bash
+    ports:
+      - 14550:14550/udp
+      - 18570:18570/udp
+      - 14540:14540/udp
