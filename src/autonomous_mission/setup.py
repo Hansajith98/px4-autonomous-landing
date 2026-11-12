@@ -1,4 +1,6 @@
 from setuptools import find_packages, setup
+import os
+from glob import glob
 
 package_name = 'autonomous_mission'
 
@@ -10,6 +12,8 @@ setup(
         ('share/ament_index/resource_index/packages',
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
+        (os.path.join('share', package_name, 'launch'),
+            glob('launch/*.launch.py')),
     ],
     install_requires=['setuptools'],
     zip_safe=True,
@@ -25,6 +29,10 @@ setup(
     entry_points={
         'console_scripts': [
             'waypoint_follower = autonomous_mission.waypoint_follower:main',
+            'takeoff_to_1m = autonomous_mission.takeoff_to_1m:main',
+            'live_aruco_detector = autonomous_mission.live_aruco_detector:main',
+            'aruco_pose_estimator = autonomous_mission.aruco_pose_estimator:main',
+            'precision_landing_controller = autonomous_mission.precision_landing_controller:main',
         ],
     },
 )

@@ -1,5 +1,7 @@
 FROM px4io/px4-dev-ros2-gazebo:main-jazzy
 
+ENV GZ_CONFIG_PATH="/usr/share/gz:/opt/ros/jazzy/opt/gz_transport_vendor/share/gz:/opt/ros/jazzy/opt/gz_msgs_vendor/share/gz"
+
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -10,6 +12,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     ros-jazzy-cv-bridge \
     ros-jazzy-ros-gz-bridge \
     ros-jazzy-ros-gz-image \
+    ros-jazzy-foxglove-bridge \
     git \
     vim \
     && rm -rf /var/lib/apt/lists/*
