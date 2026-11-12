@@ -2,3 +2,5 @@
 /install/*
 /log/*
 **/__pycache__/*
+# External PX4 ROS 2 message dependency
+/src/px4_msgs/
