@@ -21,7 +21,7 @@ Open a WSL terminal:
 ``` bash
 docker exec -it autonomous_landing_dev bash
 cd /PX4-Autopilot
-make px4_sitl gz_x500
+PX4_GZ_WORLD=lawn make px4_sitl gz_x500_mono_cam_down
 ```
 
 Wait for the PX4 shell and keep this terminal running. Do not run `make`
@@ -31,13 +31,29 @@ again if SITL is already running.
 
 Open a second WSL terminal:
 
-``` bash
+```bash
 docker exec -it autonomous_landing_dev bash
 MicroXRCEAgent udp4 -p 8888
 ```
 
 Keep this terminal running. PX4's DDS client should connect to the
 agent.
+
+## Run camera bridges
+```bash
+source /opt/ros/jazzy/setup.bash
+
+ros2 run ros_gz_bridge parameter_bridge \
+  '/world/lawn/model/x500_mono_cam_down_0/link/camera_link/sensor/camera/image@sensor_msgs/msg/Image[gz.msgs.Image' \
+  '/world/lawn/model/x500_mono_cam_down_0/link/camera_link/sensor/camera/camera_info@sensor_msgs/msg/CameraInfo[gz.msgs.CameraInfo'
+```
+## Run foxglove bridge
+```bash
+source /opt/ros/jazzy/setup.bash
+
+ros2 launch foxglove_bridge foxglove_bridge_launch.xml
+```
+
 
 ## 4. Terminal 3 --- Prepare ROS 2 workspace
 
